@@ -35,7 +35,7 @@ void display_usage() {
     printf("  -h, --help         Display this help message\n");
 }
 
-void list_attributes(const char *path) {
+void list_attributes(const char *path, const char *prefix) {
     char list[1024];
     ssize_t len = listxattr(path, list, sizeof(list));
 
@@ -45,16 +45,16 @@ void list_attributes(const char *path) {
     }
 
     for (char *attr = list; attr < list + len; attr += strlen(attr) + 1) {
-        if (strncmp(attr, "trusted.", 8) == 0) {
-            printf("%s\n", attr + 8);
+        if (strncmp(attr, prefix, strlen(prefix)) == 0) {
+            printf("%s\n", attr + strlen(prefix));
         }
     }
 }
 
-void read_attribute(const char *path, const char *attr_name) {
+void read_attribute(const char *path, const char *attr_name, const char *prefix) {
     char buffer[MAX_ATTR_VALUE_LENGTH];
     char full_attr_name[MAX_ATTR_NAME_LENGTH];
-    snprintf(full_attr_name, sizeof(full_attr_name), "trusted.%s", attr_name);
+    snprintf(full_attr_name, sizeof(full_attr_name), "%s%s", prefix, attr_name);
 
     ssize_t len = getxattr(path, full_attr_name, buffer, sizeof(buffer));
 
@@ -68,9 +68,9 @@ void read_attribute(const char *path, const char *attr_name) {
     printf("%s\n", buffer);
 }
 
-void write_attribute(const char *path, const char *attr_name, const char *value) {
+void write_attribute(const char *path, const char *attr_name, const char *value, const char *prefix) {
     char full_attr_name[MAX_ATTR_NAME_LENGTH];
-    snprintf(full_attr_name, sizeof(full_attr_name), "trusted.%s", attr_name);
+    snprintf(full_attr_name, sizeof(full_attr_name), "%s%s", prefix, attr_name);
 
     if (strlen(value) >= MAX_ATTR_VALUE_LENGTH) {
         fprintf(stderr, "Error: Attribute value too long.\n");
@@ -84,9 +84,9 @@ void write_attribute(const char *path, const char *attr_name, const char *value)
     // printf("Attribute %s set to %s\n", full_attr_name, value);
 }
 
-void delete_attribute(const char *path, const char *attr_name) {
+void delete_attribute(const char *path, const char *attr_name, const char *prefix) {
     char full_attr_name[MAX_ATTR_NAME_LENGTH];
-    snprintf(full_attr_name, sizeof(full_attr_name), "trusted.%s", attr_name);
+    snprintf(full_attr_name, sizeof(full_attr_name), "%s%s", prefix, attr_name);
 
     if (removexattr(path, full_attr_name) == -1) {
         perror("removexattr");
@@ -114,11 +114,13 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    const char *prefix = "trusted.user.";
+
     // Parse command line options
     while ((opt = getopt_long(argc, argv, "lr:w:d:h", options, &option_index)) != -1) {
         switch (opt) {
             case 'l':
-                list_attributes(argv[optind]);
+                list_attributes(argv[optind], prefix);
                 break;
             case 'r':
                 if (argc - optind < 1) {
@@ -126,7 +128,7 @@ int main(int argc, char *argv[]) {
                     display_usage();
                     exit(EXIT_FAILURE);
                 }
-                read_attribute(argv[optind], optarg);
+                read_attribute(argv[optind], optarg, prefix);
                 break;
             case 'w':
                 if (argc - optind < 2) {
@@ -134,7 +136,7 @@ int main(int argc, char *argv[]) {
                     display_usage();
                     exit(EXIT_FAILURE);
                 }
-                write_attribute(argv[optind + 1], optarg, argv[optind]);
+                write_attribute(argv[optind + 1], optarg, argv[optind], prefix);
                 optind += 2;
                 break;
             case 'd':
@@ -143,7 +145,7 @@ int main(int argc, char *argv[]) {
                     display_usage();
                     exit(EXIT_FAILURE);
                 }
-                delete_attribute(argv[optind], optarg);
+                delete_attribute(argv[optind], optarg, prefix);
                 break;
             case 'h':
                 display_usage();
@@ -157,3 +159,4 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
+
