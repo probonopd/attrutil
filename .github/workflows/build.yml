@@ -17,11 +17,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake libattr1-dev
+
+    - name: Build
+      run: |
         mkdir build
         cd build
         cmake ..
         sudo make
-        ls
+        strip attrutil
         cd ..
 
     - name: Delete Existing Release and Tag
