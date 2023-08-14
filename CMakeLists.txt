@@ -3,24 +3,10 @@ project(attrutil C)
 
 set(CMAKE_C_STANDARD 11)
 
-# Specify the cross-compiler for Musl libc
-set(CMAKE_C_COMPILER musl-gcc)
+add_executable(attrutil attrutil.c)
 
-# Define the source files
-set(SOURCE_FILES attrutil.c)
-
-# Add the executable and link against Musl libc and libattr
-add_executable(attrutil ${SOURCE_FILES})
-
-# Link against Musl libc's static libraries
-target_link_libraries(attrutil -static-libgcc -static-libstdc++)
-
-# Link the libattr library statically
-find_library(ATTR_LIBRARY attr)
-target_link_libraries(attrutil -Wl,-Bstatic ${ATTR_LIBRARY} -Wl,-Bdynamic)
-
-# Include the header directory for the libattr library
-include_directories(${ATTR_LIBRARY}/../../include)
+# Link the libattr library
+target_link_libraries(attrutil attr)
 
 # Add a custom command to execute the setup script
 add_custom_command(TARGET attrutil POST_BUILD
