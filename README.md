@@ -15,7 +15,7 @@ Setuid programs can introduce security risks if not managed properly. Do not use
 
 ## Building and Installation
 1. Install `libattr1-dev` using: `sudo apt-get install libattr1-dev`
-2. Compile the program using a command like: `gcc -o setuid_attr_app setuid_attr_app.c -lattribute`
-3. Set the setuid bit using: `chmod u+s setuid_attr_app`
-4. Change ownership to root using: `sudo chown root:root setuid_attr_app`
-5. Secure permissions with: `chmod 4755 setuid_attr_app`
+2. Compile the program using a command like: `gcc -o attrutil attrutil.c -lattribute`
+3. Set the setuid bit using: `chmod u+s attrutil`
+4. Change ownership to root using: `sudo chown root:root attrutil`
+5. Secure permissions with: `chmod 4755 attrutil`
