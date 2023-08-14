@@ -1,10 +1,12 @@
 # attrutil
 
-Command line tool to set extended attributes
+Command line tool to set extended attributes on Linux [tmpfs](https://kernel.org/doc/html/next/filesystems/tmpfs.html)
 
 ## Motivation
 
-The tmpfs filesystem does not support `user.*` namespaces, and standard unprivileged applications cannot access the `trusted.*` namespace on tmpfs mounts. To overcome this limitation and allow non-root users to manage extended attributes in the `trusted.*` namespace on tmpfs, this program serves as a setuid helper. It is installed with elevated privileges and can perform the required extended attribute operations.
+The tmpfs filesystem does not support the `user.*` namespace, and standard unprivileged applications cannot access the `trusted.*` namespace. To overcome this limitation and allow non-root users to manage extended attributes in the `trusted.*` namespace on tmpfs, this program serves as a setuid helper. It is installed with elevated privileges and can perform the required extended attribute operations.
+
+__Note:__ The need for this tool would go away if the tmpfs filesystem supported the `user.*` namespace.
 
 ## Usage
 
