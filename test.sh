@@ -3,8 +3,17 @@
 ls -lh $(which attrutil)
 
 # Create a tmpfs
-mount
 mkdir -p tmp && sudo mount -t tmpfs tmfps tmp
+mount | tail -n 1
+
+# Set the setuid bit
+sudo chmod u+s $(which attrutil)
+
+# Change ownership to root
+sudo chown root:root $(which attrutil)
+
+# Secure permissions
+sudo chmod 4755  $(which attrutil)
 
 # Create a test file on the tmpfs
 test_file="tmp/test_file"
