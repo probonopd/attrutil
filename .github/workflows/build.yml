@@ -1,0 +1,39 @@
+name: Build with CMake
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up build environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake libattr1-dev
+        mkdir build
+        cd build
+        cmake ..
+        sudo make
+        ls
+        cd ..
+
+    - name: Delete Existing Release and Tag
+      run: |
+        git push --delete origin continuous || true
+
+    - name: Upload Artifacts to GitHub Releases
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/attrutil
+        tag_name: continuous
+        target_commitish: ${{ github.sha }}
+        draft: false
+        
