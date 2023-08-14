@@ -24,7 +24,6 @@ jobs:
         cd build
         cmake ..
         sudo make
-        strip attrutil
         cp attrutil /usr/local/bin
         cd ..
 
