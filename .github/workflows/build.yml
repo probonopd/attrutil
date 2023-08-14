@@ -30,8 +30,7 @@ jobs:
 
     - name: Run test
       run: |
-        chmod +x test_script.sh
-        sh ./test_script.sh
+        sh ./test.sh
         
     - name: Delete Existing Release and Tag
       run: |
