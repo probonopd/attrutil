@@ -25,7 +25,7 @@
 #define MAX_ATTR_VALUE_LENGTH 1000
 
 void display_usage() {
-    printf("Usage: setuid_attr_app [options] <file>\n");
+    printf("Usage: attrutil [options] <file>\n");
     printf("Options:\n");
     printf("  -l, --list         List extended attributes\n");
     printf("  -r, --read <attr>  Read the specified attribute\n");
