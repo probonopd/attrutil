@@ -25,8 +25,14 @@ jobs:
         cmake ..
         sudo make
         strip attrutil
+        cp attrutil /usr/local/bin
         cd ..
 
+    - name: Run test
+      run: |
+        chmod +x test_script.sh
+        sh ./test_script.sh
+        
     - name: Delete Existing Release and Tag
       run: |
         git push --delete origin continuous || true
