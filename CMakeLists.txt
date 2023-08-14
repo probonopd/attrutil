@@ -10,7 +10,8 @@ target_link_libraries(attrutil attr)
 
 # Add a custom command to execute the setup script
 add_custom_command(TARGET attrutil POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E echo "Setting up setuid for attrutil..."
+    COMMAND ${CMAKE_COMMAND} -E echo "Stripping and setting up setuid for attrutil..."
+    COMMAND strip $<TARGET_FILE:attrutil>
     COMMAND chmod u+s $<TARGET_FILE:attrutil>
     COMMAND chown root:root $<TARGET_FILE:attrutil>
     COMMAND chmod 4755 $<TARGET_FILE:attrutil>
