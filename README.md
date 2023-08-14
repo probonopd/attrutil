@@ -4,13 +4,13 @@ Command line tool to set extended attributes on Linux [tmpfs](https://kernel.org
 
 ## Motivation
 
-The tmpfs filesystem does not support the `user.*` namespace, and standard unprivileged applications cannot access the `trusted.*` namespace. To overcome this limitation and allow non-root users to manage extended attributes in the `trusted.*` namespace on tmpfs, this program serves as a setuid helper. It is installed with elevated privileges and can perform the required extended attribute operations.
+The tmpfs filesystem does not support the `user.*` namespace, and standard unprivileged applications cannot access the `trusted.*` namespace. To overcome this limitation and allow non-root users to manage extended attributes in the `trusted.user.*` namespace on tmpfs, this program serves as a setuid helper. It is installed with elevated privileges and can perform the required extended attribute operations.
 
 __Note:__ The need for this tool would go away if the tmpfs filesystem supported the `user.*` namespace.
 
 ## Usage
 
-`attrutil` provides command-line options to list, read, write, and delete attributes within the `trusted.*` namespace on files. The program should be carefully reviewed and tested before use in any production environment.
+`attrutil` provides command-line options to list, read, write, and delete attributes within the `trusted.user.*` namespace on files. The program should be carefully reviewed and tested before use in any production environment.
 
 **IMPORTANT:**
 Setuid programs can introduce security risks if not managed properly. Do not use setuid programs unless you fully understand the implications and take appropriate security precautions.
