@@ -19,6 +19,9 @@ target_link_libraries(attrutil -static-libgcc -static-libstdc++)
 find_library(ATTR_LIBRARY attr)
 target_link_libraries(attrutil -Wl,-Bstatic ${ATTR_LIBRARY} -Wl,-Bdynamic)
 
+# Include the header directory for the libattr library
+include_directories(${ATTR_LIBRARY}/../../include)
+
 # Add a custom command to execute the setup script
 add_custom_command(TARGET attrutil POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E echo "Setting up setuid for attrutil..."
