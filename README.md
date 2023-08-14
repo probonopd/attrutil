@@ -8,10 +8,23 @@ The tmpfs filesystem does not support `user.*` namespaces, and standard unprivil
 
 ## Usage
 
-The program provides command-line options to list, read, write, and delete attributes within the `trusted.*` namespace on files. The program should be carefully reviewed and tested before use in any production environment.
+`attrutil` provides command-line options to list, read, write, and delete attributes within the `trusted.*` namespace on files. The program should be carefully reviewed and tested before use in any production environment.
 
 **IMPORTANT:**
 Setuid programs can introduce security risks if not managed properly. Do not use setuid programs unless you fully understand the implications and take appropriate security precautions.
+
+Below is a list of available options:
+
+```
+Usage: attrutil [options] <file>
+Options:
+  -l, --list          List extended attributes
+  -r, --read <attr>   Read the specified attribute
+  -w, --write <attr>  <value>
+                      Write the specified attribute with the given value
+  -d, --delete <attr> Delete the specified attribute
+  -h, --help          Display this help message
+```
 
 ## Building and Installation
 1. Install `libattr1-dev` using: `sudo apt-get install libattr1-dev`
