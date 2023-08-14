@@ -16,7 +16,7 @@ jobs:
     - name: Set up build environment
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake libattr1-dev
+        sudo apt-get install -y cmake libattr1-dev musl-tools
         mkdir build
         cd build
         cmake ..
