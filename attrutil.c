@@ -1,15 +1,6 @@
-// Extended Attributes Setuid Helper
-//
-// The tmpfs filesystem does not support user namespaces, which means that standard
-// unprivileged applications cannot access the "trusted.*" namespace on tmpfs mounts.
-// To overcome this limitation and allow non-root users to manage extended attributes in the "trusted.*"
-// namespace on tmpfs, this program serves as a setuid helper. It is compiled with elevated privileges
-// and can perform the required extended attribute operations.
-//
-// Usage:
-// The program provides command-line options to list, read, write, and delete attributes within the
-// "trusted.*" namespace on files. The program should be compiled with proper security measures and
-// carefully tested before use in any production environment.
+// This program provides command-line options to list, read, write, and delete attributes within the
+// "trusted.*" namespace on files. The program should be carefully reviewed and tested before use 
+// in any production environment.
 //
 // IMPORTANT:
 // Setuid programs can introduce security risks if not managed properly.
@@ -18,10 +9,10 @@
 //
 // Installation:
 // 0. sudo apt-get libattr1-dev
-// 1. Compile the program using a command like: gcc -o setuid_attr_app setuid_attr_app.c -lattribute
-// 2. Set the setuid bit using: chmod u+s setuid_attr_app
-// 3. Change ownership to root using: sudo chown root:root setuid_attr_app
-// 4. Secure permissions with: chmod 4755 setuid_attr_app
+// 1. Compile the program using a command like: gcc -o attrutil attrutil.c -lattribute
+// 2. Set the setuid bit using: chmod u+s attrutil
+// 3. Change ownership to root using: sudo chown root:root attrutil
+// 4. Secure permissions with: chmod 4755 attrutil
 
 #include <stdio.h>
 #include <stdlib.h>
