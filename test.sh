@@ -1,7 +1,12 @@
 #!/bin/sh
 
-# Create a temporary test file
-test_file="/tmp/test_file"
+ls -lh $(which attrutil)
+
+# Create a tmpfs
+mkdir -p tmp && mount -t tmpfs tmfps tmp
+
+# Create a test file on the tmpfs
+test_file="tmp/test_file"
 echo "This is a test file." > "$test_file"
 
 # Run the attrutil program to set, list, and read an attribute
