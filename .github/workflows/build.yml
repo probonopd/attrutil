@@ -36,6 +36,7 @@ jobs:
         git push --delete origin continuous || true
      
     - name: Wait a bit
+      # Prevents draft releases getting created 
       run: sleep 2
 
     - name: Upload Artifacts to GitHub Releases
